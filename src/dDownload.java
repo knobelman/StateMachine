@@ -5,6 +5,25 @@ public class dDownload implements DownloadMngrState {
         this.dmngr = dmngr;
     }
 
+    public void downloadDone(){
+        this.dmngr.diskSize -= this.dmngr.movieInProgress.getSize();
+        this.dmngr.downloadPercentage = 100;
+        whenChangePoints(1);
+        exit();
+        this.dmngr.setDownloadState(this.dmngr.dIdle);
+        this.dmngr.downloadState.entry();
+    }
+
+    @Override
+    public void whenInIdle() {
+
+    }
+
+    @Override
+    public void whenInDownload() {
+        this.dmngr.whenInDownload();
+    }
+
     @Override
     public void turnOn() {
 
@@ -22,7 +41,9 @@ public class dDownload implements DownloadMngrState {
 
     @Override
     public void internetOff() {
-
+        exit();
+        this.dmngr.setDownloadState(this.dmngr.dHold);
+        this.dmngr.downloadState.entry();
     }
 
     @Override
@@ -41,17 +62,27 @@ public class dDownload implements DownloadMngrState {
     }
 
     @Override
-    public void changePoints(int x) {
+    public void whenChangePoints(int x) {
 
     }
 
     @Override
     public void downloadAborted() {
-
+        whenChangePoints(-1);
+        exit();
+        this.dmngr.setDownloadState(this.dmngr.dIdle);
+        this.dmngr.downloadState.entry();
     }
 
     @Override
     public void downloadError() {
+        exit();
+        this.dmngr.setDownloadState(this.dmngr.dFixing);
+        this.dmngr.downloadState.entry();
+    }
+
+    @Override
+    public void whenQueueNotEmpty() {
 
     }
 
@@ -87,11 +118,16 @@ public class dDownload implements DownloadMngrState {
 
     @Override
     public void entry() {
-
+        System.out.println("Enter Download Download state");
+        System.out.println("Downloading...");
+        this.dmngr.downloadPercentage = 20;
+        this.dmngr.inDownload = true;
+        whenInDownload();
     }
 
     @Override
     public void exit() {
-
+        System.out.println("Exit Download Download state");
+        this.dmngr.inDownload = false;
     }
 }

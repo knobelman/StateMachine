@@ -6,9 +6,10 @@ public interface DownloadMngrState {
     void checkPoints();
     void checkValidMovieSize();
     void fileRequest(Movie movie);
-    void changePoints(int x);//change point by x and change level accordingly (pPro,pInter,pAma)
+    void whenChangePoints(int x);//change point by x and change level accordingly (pPro,pInter,pAma)
     void downloadAborted();
     void downloadError();
+    void whenQueueNotEmpty();
     void errorFixed();
     void movieOn();
     void restartMovie();
@@ -17,4 +18,7 @@ public interface DownloadMngrState {
     void resume();
     void entry();
     void exit();
+    void downloadDone();
+    void whenInIdle();
+    void whenInDownload();
 }

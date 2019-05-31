@@ -17,7 +17,9 @@ public class dHold implements DownloadMngrState {
 
     @Override
     public void internetOn() {
-
+        exit();
+        this.dmngr.setDownloadState(this.dmngr.dDownload);
+        this.dmngr.downloadState.entry();
     }
 
     @Override
@@ -41,17 +43,25 @@ public class dHold implements DownloadMngrState {
     }
 
     @Override
-    public void changePoints(int x) {
+    public void whenChangePoints(int x) {
 
     }
 
     @Override
     public void downloadAborted() {
-
+        whenChangePoints(-1);
+        exit();
+        this.dmngr.setDownloadState(this.dmngr.dIdle);
+        this.dmngr.downloadState.entry();
     }
 
     @Override
     public void downloadError() {
+
+    }
+
+    @Override
+    public void whenQueueNotEmpty() {
 
     }
 
@@ -87,11 +97,28 @@ public class dHold implements DownloadMngrState {
 
     @Override
     public void entry() {
+        System.out.println("Enter Download Hold state");
 
     }
 
     @Override
     public void exit() {
+        System.out.println("Exit Download Hold state");
+
+    }
+
+    @Override
+    public void downloadDone() {
+
+    }
+
+    @Override
+    public void whenInIdle() {
+
+    }
+
+    @Override
+    public void whenInDownload() {
 
     }
 }

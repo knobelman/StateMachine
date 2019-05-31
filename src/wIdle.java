@@ -7,7 +7,7 @@ public class wIdle implements DownloadMngrState {
 
     @Override
     public void turnOn() {
-
+        entry();
     }
 
     @Override
@@ -41,7 +41,7 @@ public class wIdle implements DownloadMngrState {
     }
 
     @Override
-    public void changePoints(int x) {
+    public void whenChangePoints(int x) {
 
     }
 
@@ -56,13 +56,22 @@ public class wIdle implements DownloadMngrState {
     }
 
     @Override
+    public void whenQueueNotEmpty() {
+
+    }
+
+    @Override
     public void errorFixed() {
 
     }
 
     @Override
     public void movieOn() {
-
+        if(this.wmngr.mgm.downloadMngr.inDownload && this.wmngr.mgm.downloadMngr.downloadPercentage>=20){
+            exit();
+            this.wmngr.setWatchState(this.wmngr.wWatch);
+            this.wmngr.watchState.entry();
+        }
     }
 
     @Override
@@ -94,5 +103,20 @@ public class wIdle implements DownloadMngrState {
     @Override
     public void exit() {
         System.out.println("Exit Idle Watch state");
+    }
+
+    @Override
+    public void downloadDone() {
+
+    }
+
+    @Override
+    public void whenInIdle() {
+
+    }
+
+    @Override
+    public void whenInDownload() {
+
     }
 }

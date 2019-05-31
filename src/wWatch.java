@@ -22,7 +22,10 @@ public class wWatch implements DownloadMngrState {
 
     @Override
     public void internetOff() {
-
+        exit();
+        this.wmngr.manual = false;
+        this.wmngr.setWatchState(this.wmngr.wHold);
+        this.wmngr.watchState.entry();
     }
 
     @Override
@@ -41,7 +44,7 @@ public class wWatch implements DownloadMngrState {
     }
 
     @Override
-    public void changePoints(int x) {
+    public void whenChangePoints(int x) {
 
     }
 
@@ -52,6 +55,14 @@ public class wWatch implements DownloadMngrState {
 
     @Override
     public void downloadError() {
+        exit();
+        this.wmngr.manual = false;
+        this.wmngr.setWatchState(this.wmngr.wHold);
+        this.wmngr.watchState.entry();
+    }
+
+    @Override
+    public void whenQueueNotEmpty() {
 
     }
 
@@ -67,12 +78,17 @@ public class wWatch implements DownloadMngrState {
 
     @Override
     public void restartMovie() {
-
+        exit();
+        this.wmngr.cursor = 0;
+        entry();
     }
 
     @Override
     public void holdMovie() {
-
+        exit();
+        this.wmngr.manual = true;
+        this.wmngr.setWatchState(this.wmngr.wHold);
+        this.wmngr.watchState.entry();
     }
 
     @Override
@@ -93,5 +109,22 @@ public class wWatch implements DownloadMngrState {
     @Override
     public void exit() {
         System.out.println("Exit Watch Watch state");
+    }
+
+    @Override
+    public void downloadDone() {
+
+    }
+
+    @Override
+    public void whenInIdle() {
+        exit();
+        this.wmngr.setWatchState(this.wmngr.wIdle);
+        this.wmngr.watchState.entry();
+    }
+
+    @Override
+    public void whenInDownload() {
+
     }
 }

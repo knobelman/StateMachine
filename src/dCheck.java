@@ -17,7 +17,12 @@ public class dCheck implements DownloadMngrState {
 
     @Override
     public void internetOn() {
-
+        boolean valid = this.dmngr.movieInProgress.getSize() < this.dmngr.diskSize;
+        if(valid){
+            this.dmngr.setDownloadState(this.dmngr.dDownload);
+            exit();
+            this.dmngr.downloadState.entry();
+        }
     }
 
     @Override
@@ -32,7 +37,19 @@ public class dCheck implements DownloadMngrState {
 
     @Override
     public void checkValidMovieSize() {
-
+        boolean valid = this.dmngr.movieInProgress.getSize() < this.dmngr.diskSize;
+        if(!valid && !this.dmngr.wait){//not enough space and haven't been inside wait
+            this.dmngr.setDownloadState(this.dmngr.dWait);
+        }
+        else if(!valid && this.dmngr.wait){//not enough space and have been inside wait
+            whenChangePoints(-1);
+            this.dmngr.setDownloadState(this.dmngr.dIdle);
+        }
+        else if(valid && this.dmngr.mgm.networkMngr.getInternet()){
+            this.dmngr.setDownloadState(this.dmngr.dDownload);
+        }
+        exit();
+        this.dmngr.downloadState.entry();
     }
 
     @Override
@@ -41,17 +58,25 @@ public class dCheck implements DownloadMngrState {
     }
 
     @Override
-    public void changePoints(int x) {
-
+    public void whenChangePoints(int x) {
+        this.dmngr.whenChangePoints(x);
     }
 
     @Override
     public void downloadAborted() {
-
+        whenChangePoints(-1);
+        exit();
+        this.dmngr.setDownloadState(this.dmngr.dIdle);
+        this.dmngr.downloadState.entry();
     }
 
     @Override
     public void downloadError() {
+
+    }
+
+    @Override
+    public void whenQueueNotEmpty() {
 
     }
 
@@ -87,11 +112,27 @@ public class dCheck implements DownloadMngrState {
 
     @Override
     public void entry() {
-
+        System.out.println("Enter Download Check state");
+        checkValidMovieSize();
     }
 
     @Override
     public void exit() {
+        System.out.println("Exit Download Check state");
+    }
+
+    @Override
+    public void downloadDone() {
+
+    }
+
+    @Override
+    public void whenInIdle() {
+
+    }
+
+    @Override
+    public void whenInDownload() {
 
     }
 }

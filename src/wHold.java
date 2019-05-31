@@ -41,7 +41,7 @@ public class wHold implements DownloadMngrState {
     }
 
     @Override
-    public void changePoints(int x) {
+    public void whenChangePoints(int x) {
 
     }
 
@@ -52,6 +52,11 @@ public class wHold implements DownloadMngrState {
 
     @Override
     public void downloadError() {
+
+    }
+
+    @Override
+    public void whenQueueNotEmpty() {
 
     }
 
@@ -82,7 +87,11 @@ public class wHold implements DownloadMngrState {
 
     @Override
     public void resume() {
-
+        if(this.wmngr.mgm.downloadMngr.inDownload && this.wmngr.manual) {
+            exit();
+            this.wmngr.setWatchState(this.wmngr.wWatch);
+            this.wmngr.watchState.entry();
+        }
     }
 
     @Override
@@ -93,5 +102,26 @@ public class wHold implements DownloadMngrState {
     @Override
     public void exit() {
         System.out.println("Exit Hold Watch state");
+    }
+
+    @Override
+    public void downloadDone() {
+
+    }
+
+    @Override
+    public void whenInIdle() {
+        exit();
+        this.wmngr.setWatchState(this.wmngr.wIdle);
+        this.wmngr.watchState.entry();
+    }
+
+    @Override
+    public void whenInDownload() {
+        if(!this.wmngr.manual){
+            exit();
+            this.wmngr.setWatchState(this.wmngr.wWatch);
+            this.wmngr.watchState.entry();
+        }
     }
 }

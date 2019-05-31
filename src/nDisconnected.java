@@ -7,7 +7,7 @@ public class nDisconnected implements DownloadMngrState {
 
     @Override
     public void turnOn() {
-
+        entry();
     }
 
     @Override
@@ -43,7 +43,7 @@ public class nDisconnected implements DownloadMngrState {
     }
 
     @Override
-    public void changePoints(int x) {
+    public void whenChangePoints(int x) {
 
     }
 
@@ -54,6 +54,11 @@ public class nDisconnected implements DownloadMngrState {
 
     @Override
     public void downloadError() {
+
+    }
+
+    @Override
+    public void whenQueueNotEmpty() {
 
     }
 
@@ -90,10 +95,26 @@ public class nDisconnected implements DownloadMngrState {
     @Override
     public void entry() {
         System.out.println("Enter Network Disconnected state");
+        this.nmgr.internet = false;
     }
 
     @Override
     public void exit() {
         System.out.println("Exit Network Disconnected state");
+    }
+
+    @Override
+    public void downloadDone() {
+
+    }
+
+    @Override
+    public void whenInIdle() {
+
+    }
+
+    @Override
+    public void whenInDownload() {
+
     }
 }

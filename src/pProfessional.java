@@ -6,8 +6,32 @@ public class pProfessional implements DownloadMngrState {
     }
 
     @Override
-    public void turnOn() {
+    public void whenChangePoints(int x){
+        if(this.lmgr.points + x < 0)
+            this.lmgr.points = 0;
+        else
+            this.lmgr.points += x;
+        if(this.lmgr.points>4 && this.lmgr.points<=7){
+            exit();
+            this.lmgr.setLevelState(this.lmgr.pIntermediate);
+            this.lmgr.levelState.entry();
+        }
+    }
 
+    @Override
+    public void entry() {
+        System.out.println("Enter Level Professional state");
+        this.lmgr.speed = 1.5;
+    }
+
+    @Override
+    public void exit() {
+        System.out.println("Exit Level Professional state");
+    }
+
+    @Override
+    public void turnOn() {
+        entry();
     }
 
     @Override
@@ -41,25 +65,17 @@ public class pProfessional implements DownloadMngrState {
     }
 
     @Override
-    public void changePoints(int x){
-        if(this.lmgr.points + x < 0)
-            this.lmgr.points = 0;
-        else
-            this.lmgr.points += x;
-        if(this.lmgr.points>4 && this.lmgr.points<=7){
-            exit();
-            this.lmgr.setLevelState(this.lmgr.pIntermediate);
-            this.lmgr.levelState.entry();
-        }
-    }
-
-    @Override
     public void downloadAborted() {
 
     }
 
     @Override
     public void downloadError() {
+
+    }
+
+    @Override
+    public void whenQueueNotEmpty() {
 
     }
 
@@ -84,6 +100,21 @@ public class pProfessional implements DownloadMngrState {
     }
 
     @Override
+    public void downloadDone() {
+
+    }
+
+    @Override
+    public void whenInIdle() {
+
+    }
+
+    @Override
+    public void whenInDownload() {
+
+    }
+
+    @Override
     public void movieOff() {
 
     }
@@ -91,16 +122,5 @@ public class pProfessional implements DownloadMngrState {
     @Override
     public void resume() {
 
-    }
-
-    @Override
-    public void entry() {
-        System.out.println("Enter Level Professional state");
-        this.lmgr.speed = 1.5;
-    }
-
-    @Override
-    public void exit() {
-        System.out.println("Exit Level Professional state");
     }
 }

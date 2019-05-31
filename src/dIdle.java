@@ -1,11 +1,16 @@
-import java.util.Observable;
-import java.util.Observer;
-
-public class dIdle implements DownloadMngrState, Observer {
+public class dIdle implements DownloadMngrState {
     DownloadMngr dmngr;
 
     public dIdle(DownloadMngr dmngr){
         this.dmngr = dmngr;
+    }
+
+    @Override
+    public void whenQueueNotEmpty() {
+        this.dmngr.getMovie();
+        this.dmngr.setDownloadState(this.dmngr.dCheck);
+        exit();
+        this.dmngr.downloadState.entry();
     }
 
     @Override
@@ -44,7 +49,7 @@ public class dIdle implements DownloadMngrState, Observer {
     }
 
     @Override
-    public void changePoints(int x) {
+    public void whenChangePoints(int x) {
 
     }
 
@@ -91,6 +96,8 @@ public class dIdle implements DownloadMngrState, Observer {
     @Override
     public void entry() {
         System.out.println("Enter Download Idle state");
+        this.dmngr.wait = false;
+        this.dmngr.downloadPercentage = 0;
     }
 
     @Override
@@ -99,7 +106,18 @@ public class dIdle implements DownloadMngrState, Observer {
     }
 
     @Override
-    public void update(Observable o, Object arg) {
+    public void downloadDone() {
 
     }
+
+    @Override
+    public void whenInIdle() {
+
+    }
+
+    @Override
+    public void whenInDownload() {
+
+    }
+
 }

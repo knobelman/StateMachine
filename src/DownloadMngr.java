@@ -1,8 +1,12 @@
-public class DownloadMngr {
+import java.util.Observable;
+
+public class DownloadMngr extends Observable implements DownloadMngrState{
     MovieDownloaderManager mgm;
     public double downloadPercentage;
     public int diskSize;
     public boolean wait;
+    public boolean inDownload;
+    public Movie movieInProgress;
     //Download Region
     DownloadMngrState dIdle;
     DownloadMngrState dCheck;
@@ -20,15 +24,129 @@ public class DownloadMngr {
         this.dHold = new dHold(this);
         this.dFixing = new dFixing(this);
         this.mgm = mgm;
+        this.addObserver(this.mgm);
 
         this.downloadState = dIdle;
         this.downloadState.entry();
         downloadPercentage = 0;
         this.diskSize = 100;
         this.wait = false;
+        this.inDownload = false;
     }
 
     public void setDownloadState(DownloadMngrState newState){
         this.downloadState = newState;
     }
+    public DownloadMngrState getState(){ return this.downloadState; }
+    public void getMovie(){ this.movieInProgress = this.mgm.downloadQ.remove(); }
+
+    @Override
+    public void whenChangePoints(int x) {
+        this.notifyObservers(x);
+    }
+
+    public void downloadDone(){
+        this.downloadState.downloadDone();
+    }
+
+    @Override
+    public void whenInIdle() {
+
+    }
+
+    @Override
+    public void whenInDownload() {
+        this.notifyObservers(2);
+    }
+
+    @Override
+    public void whenQueueNotEmpty() {
+        this.downloadState.whenQueueNotEmpty();
+    }
+
+    @Override
+    public void turnOn() {
+        this.downloadState.entry();
+    }
+
+    @Override
+    public void turnOff() {
+        this.downloadState.exit();
+    }
+
+    @Override
+    public void internetOn() {
+        this.downloadState.internetOn();
+    }
+
+    @Override
+    public void internetOff() {
+        this.downloadState.internetOff();
+    }
+
+    @Override
+    public void checkPoints() {
+        this.downloadState.checkPoints();
+    }
+
+    @Override
+    public void checkValidMovieSize() {
+        this.downloadState.checkValidMovieSize();
+    }
+
+    @Override
+    public void fileRequest(Movie movie) {
+        this.downloadState.fileRequest(movie);
+    }
+
+    @Override
+    public void downloadAborted() {
+        this.downloadState.downloadAborted();
+    }
+
+    @Override
+    public void downloadError() {
+        this.downloadState.downloadError();
+    }
+
+    @Override
+    public void errorFixed() {
+        this.downloadState.errorFixed();
+    }
+
+    @Override
+    public void movieOn() {
+        this.downloadState.movieOn();
+    }
+
+    @Override
+    public void restartMovie() {
+        this.downloadState.restartMovie();
+    }
+
+    @Override
+    public void holdMovie() {
+        this.downloadState.holdMovie();
+    }
+
+    @Override
+    public void movieOff() {
+        this.downloadState.movieOff();
+    }
+
+    @Override
+    public void resume() {
+        this.downloadState.resume();
+    }
+
+    @Override
+    public void entry() {
+        this.downloadState.entry();
+    }
+
+    @Override
+    public void exit() {
+        this.downloadState.exit();
+    }
 }
+

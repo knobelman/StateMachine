@@ -1,22 +1,20 @@
-import java.util.Observable;
 
-public class qListening extends Observable implements DownloadMngrState{
-    MovieDownloaderManager mgm;
+public class qListening implements DownloadMngrState{
+    QueueMngr qmngr;
 
-    public qListening(MovieDownloaderManager mgm){
-        this.mgm = mgm;
+    public qListening(QueueMngr qmngr){
+        this.qmngr = qmngr;
     }
 
-    public void addObserver(DownloadMngrState state){
-        this.addObserver(state);
+    @Override
+    public void fileRequest(Movie movie) {
+        this.qmngr.addMovieToQueue(movie);
+        whenQueueNotEmpty();
     }
 
-    public void removeObserver(DownloadMngrState state){
-        this.removeObserver(state);
-    }
-
-    public void notifyObs(){
-        this.notifyObservers();
+    @Override
+    public void whenQueueNotEmpty() {
+        this.qmngr.whenQueueNotEmpty();
     }
 
     @Override
@@ -50,13 +48,7 @@ public class qListening extends Observable implements DownloadMngrState{
     }
 
     @Override
-    public void fileRequest(Movie movie) {
-        this.mgm.downloadQ.add(movie);
-        notify();
-    }
-
-    @Override
-    public void changePoints(int x) {
+    public void whenChangePoints(int x) {
 
     }
 
@@ -107,6 +99,21 @@ public class qListening extends Observable implements DownloadMngrState{
 
     @Override
     public void exit() {
+
+    }
+
+    @Override
+    public void downloadDone() {
+
+    }
+
+    @Override
+    public void whenInIdle() {
+
+    }
+
+    @Override
+    public void whenInDownload() {
 
     }
 
