@@ -8,7 +8,7 @@ public class qListening implements DownloadMngrState{
 
     @Override
     public void fileRequest(Movie movie) {
-        if(this.qmngr.mgm.downloadQ.isEmpty()) {//only one download at a time
+        if(this.qmngr.mgm.downloadQ.isEmpty() && this.qmngr.mgm.downloadMngr.inIdle) {//only one download at a time
             this.qmngr.addMovieToQueue(movie);
             whenQueueNotEmpty();
         }
@@ -66,6 +66,11 @@ public class qListening implements DownloadMngrState{
 
     @Override
     public void errorFixed() {
+
+    }
+
+    @Override
+    public void errorFixedFailed() {
 
     }
 

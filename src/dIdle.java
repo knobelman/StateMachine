@@ -69,6 +69,11 @@ public class dIdle implements DownloadMngrState {
     }
 
     @Override
+    public void errorFixedFailed() {
+
+    }
+
+    @Override
     public void movieOn() {
 
     }
@@ -96,12 +101,15 @@ public class dIdle implements DownloadMngrState {
     @Override
     public void entry() {
         System.out.println("Enter Download Idle state");
+        whenInIdle();
         this.dmngr.wait = false;
+        this.dmngr.inIdle = true;
         this.dmngr.downloadPercentage = 0;
     }
 
     @Override
     public void exit() {
+        this.dmngr.inIdle = false;
         System.out.println("Exit Download Idle state");
     }
 
@@ -112,7 +120,8 @@ public class dIdle implements DownloadMngrState {
 
     @Override
     public void whenInIdle() {
-
+        if(this.dmngr.mgm.on)
+            this.dmngr.whenInIdle();
     }
 
     @Override

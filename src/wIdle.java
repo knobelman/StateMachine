@@ -66,6 +66,11 @@ public class wIdle implements DownloadMngrState {
     }
 
     @Override
+    public void errorFixedFailed() {
+
+    }
+
+    @Override
     public void movieOn() {
         if(this.wmngr.mgm.downloadMngr.inDownload && this.wmngr.mgm.downloadMngr.downloadPercentage>=20){
             exit();

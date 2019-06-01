@@ -99,6 +99,11 @@ public class WatchMngr implements DownloadMngrState {
     }
 
     @Override
+    public void errorFixedFailed() {
+
+    }
+
+    @Override
     public void movieOn() {
         this.watchState.movieOn();
     }

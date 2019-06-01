@@ -85,6 +85,11 @@ public class pProfessional implements DownloadMngrState {
     }
 
     @Override
+    public void errorFixedFailed() {
+
+    }
+
+    @Override
     public void movieOn() {
 
     }

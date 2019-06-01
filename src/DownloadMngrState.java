@@ -11,6 +11,7 @@ public interface DownloadMngrState {
     void downloadError();
     void whenQueueNotEmpty();
     void errorFixed();
+    void errorFixedFailed();
     void movieOn();
     void restartMovie();
     void holdMovie();

@@ -6,8 +6,8 @@ public class Movie {
     Random rand = new Random();
 
 
-    public Movie() {
-        this.size = rand.nextInt(10);//GB
+    public Movie(int size) {
+        this.size = size;//GB
         this.length = rand.nextInt(120);//Minutes
     }
 

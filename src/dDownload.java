@@ -92,6 +92,11 @@ public class dDownload implements DownloadMngrState {
     }
 
     @Override
+    public void errorFixedFailed() {
+
+    }
+
+    @Override
     public void movieOn() {
 
     }
@@ -120,7 +125,7 @@ public class dDownload implements DownloadMngrState {
     public void entry() {
         System.out.println("Enter Download Download state");
         double speed = this.dmngr.mgm.levelMngr.speed;
-        System.out.print("Downloading with speed of " + speed + "...");
+        System.out.println("Downloading with speed of " + speed + "...");
         this.dmngr.downloadPercentage = 20;
         this.dmngr.inDownload = true;
         whenInDownload();

@@ -105,6 +105,11 @@ public class QueueMngr implements DownloadMngrState, Observable{
     }
 
     @Override
+    public void errorFixedFailed() {
+
+    }
+
+    @Override
     public void movieOn() {
         this.queueState.movieOn();
     }

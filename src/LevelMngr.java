@@ -88,6 +88,11 @@ public class LevelMngr implements DownloadMngrState{
     }
 
     @Override
+    public void errorFixedFailed() {
+
+    }
+
+    @Override
     public void movieOn() {
         this.levelState.movieOn();
     }

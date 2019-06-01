@@ -71,6 +71,11 @@ public class dHold implements DownloadMngrState {
     }
 
     @Override
+    public void errorFixedFailed() {
+
+    }
+
+    @Override
     public void movieOn() {
 
     }

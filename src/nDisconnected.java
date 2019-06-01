@@ -68,6 +68,11 @@ public class nDisconnected implements DownloadMngrState {
     }
 
     @Override
+    public void errorFixedFailed() {
+
+    }
+
+    @Override
     public void movieOn() {
 
     }

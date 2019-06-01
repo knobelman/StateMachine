@@ -65,7 +65,22 @@ public class dFixing implements DownloadMngrState {
 
     @Override
     public void errorFixed() {
+        if(this.dmngr.mgm.networkMngr.getInternet()){
+            this.dmngr.setDownloadState(this.dmngr.dDownload);
+        }
+        else{
+            this.dmngr.setDownloadState(this.dmngr.dHold);
+        }
+        exit();
+        this.dmngr.downloadState.entry();
+    }
 
+    @Override
+    public void errorFixedFailed() {
+        whenChangePoints(-1);
+        exit();
+        this.dmngr.setDownloadState(this.dmngr.dIdle);
+        this.dmngr.downloadState.entry();
     }
 
     @Override
@@ -97,25 +112,6 @@ public class dFixing implements DownloadMngrState {
     public void entry() {
         System.out.println("Enter Download Fixing state");
         System.out.println("Trying to fix...");
-        double random = Math.random();
-        if(random<0.5){//failed
-            System.out.println("Failed to fix in time, deleting movie");
-            whenChangePoints(-1);
-            exit();
-            this.dmngr.setDownloadState(this.dmngr.dIdle);
-            this.dmngr.downloadState.entry();
-        }
-        else if(this.dmngr.mgm.networkMngr.getInternet()){
-            System.out.println("Successfully fixed the move, beck to downloading");
-            exit();
-            this.dmngr.setDownloadState(this.dmngr.dDownload);
-            this.dmngr.downloadState.entry();
-        }
-        else{
-            exit();
-            this.dmngr.setDownloadState(this.dmngr.dHold);
-            this.dmngr.downloadState.entry();
-        }
     }
 
     @Override

@@ -66,6 +66,11 @@ public class wHold implements DownloadMngrState {
     }
 
     @Override
+    public void errorFixedFailed() {
+
+    }
+
+    @Override
     public void movieOn() {
 
     }
@@ -82,7 +87,10 @@ public class wHold implements DownloadMngrState {
 
     @Override
     public void movieOff() {
-
+        exit();
+        this.wmngr.manual = false;
+        this.wmngr.setWatchState(this.wmngr.wIdle);
+        this.wmngr.watchState.entry();
     }
 
     @Override

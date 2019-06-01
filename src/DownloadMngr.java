@@ -6,6 +6,7 @@ public class DownloadMngr  implements DownloadMngrState, Observable{
     public int diskSize;
     public boolean wait;
     public boolean inDownload;
+    public boolean inIdle;
     public Movie movieInProgress;
     private ArrayList<Observer> observers;
 
@@ -74,7 +75,7 @@ public class DownloadMngr  implements DownloadMngrState, Observable{
 
     @Override
     public void whenInIdle() {
-
+        this.notifyObs(0);
     }
 
     @Override
@@ -135,6 +136,11 @@ public class DownloadMngr  implements DownloadMngrState, Observable{
     @Override
     public void errorFixed() {
         this.downloadState.errorFixed();
+    }
+
+    @Override
+    public void errorFixedFailed() {
+        this.downloadState.errorFixedFailed();
     }
 
     @Override

@@ -71,6 +71,11 @@ public class dWait implements DownloadMngrState {
     }
 
     @Override
+    public void errorFixedFailed() {
+
+    }
+
+    @Override
     public void movieOn() {
 
     }
@@ -110,6 +115,7 @@ public class dWait implements DownloadMngrState {
         this.dmngr.wait = true;
 
         this.dmngr.setDownloadState(this.dmngr.dCheck);
+        System.out.println();
         exit();
         this.dmngr.downloadState.entry();
     }
