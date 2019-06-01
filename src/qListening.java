@@ -8,8 +8,10 @@ public class qListening implements DownloadMngrState{
 
     @Override
     public void fileRequest(Movie movie) {
-        this.qmngr.addMovieToQueue(movie);
-        whenQueueNotEmpty();
+        if(this.qmngr.mgm.downloadQ.isEmpty()) {//only one download at a time
+            this.qmngr.addMovieToQueue(movie);
+            whenQueueNotEmpty();
+        }
     }
 
     @Override
@@ -19,7 +21,7 @@ public class qListening implements DownloadMngrState{
 
     @Override
     public void turnOn() {
-
+        entry();
     }
 
     @Override
@@ -99,7 +101,7 @@ public class qListening implements DownloadMngrState{
 
     @Override
     public void exit() {
-
+        System.out.println("Exit Queue Listening state");
     }
 
     @Override

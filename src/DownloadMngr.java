@@ -1,12 +1,14 @@
-import java.util.Observable;
+import java.util.ArrayList;
 
-public class DownloadMngr extends Observable implements DownloadMngrState{
+public class DownloadMngr  implements DownloadMngrState, Observable{
     MovieDownloaderManager mgm;
     public double downloadPercentage;
     public int diskSize;
     public boolean wait;
     public boolean inDownload;
     public Movie movieInProgress;
+    private ArrayList<Observer> observers;
+
     //Download Region
     DownloadMngrState dIdle;
     DownloadMngrState dCheck;
@@ -24,7 +26,9 @@ public class DownloadMngr extends Observable implements DownloadMngrState{
         this.dHold = new dHold(this);
         this.dFixing = new dFixing(this);
         this.mgm = mgm;
-        this.addObserver(this.mgm);
+        observers = new ArrayList<>();
+        this.addObs(this.mgm);
+
 
         this.downloadState = dIdle;
         this.downloadState.entry();
@@ -32,6 +36,25 @@ public class DownloadMngr extends Observable implements DownloadMngrState{
         this.diskSize = 100;
         this.wait = false;
         this.inDownload = false;
+    }
+
+    @Override
+    public void addObs(Observer o) {
+        observers.add(o);
+    }
+
+    @Override
+    public void removeObs(Observer o) {
+        int observerIndex = observers.indexOf(o);
+        observers.remove(observerIndex);
+    }
+
+    @Override
+    public void notifyObs(Object x) {
+        for(Observer observer : observers){
+            observer.update(x);
+        }
+
     }
 
     public void setDownloadState(DownloadMngrState newState){
@@ -42,7 +65,7 @@ public class DownloadMngr extends Observable implements DownloadMngrState{
 
     @Override
     public void whenChangePoints(int x) {
-        this.notifyObservers(x);
+        this.notifyObs(x);
     }
 
     public void downloadDone(){
@@ -56,7 +79,7 @@ public class DownloadMngr extends Observable implements DownloadMngrState{
 
     @Override
     public void whenInDownload() {
-        this.notifyObservers(2);
+        this.notifyObs(2);
     }
 
     @Override
@@ -148,5 +171,6 @@ public class DownloadMngr extends Observable implements DownloadMngrState{
     public void exit() {
         this.downloadState.exit();
     }
+
 }
 

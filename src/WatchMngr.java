@@ -39,101 +39,102 @@ public class WatchMngr implements DownloadMngrState {
 
     @Override
     public void turnOn() {
-
+        this.watchState.turnOn();
     }
 
     @Override
     public void turnOff() {
-
+        this.watchState.exit();
+        setWatchState(wIdle);
     }
 
     @Override
     public void internetOn() {
-
+        this.watchState.internetOn();
     }
 
     @Override
     public void internetOff() {
-
+        this.watchState.internetOff();
     }
 
     @Override
     public void checkPoints() {
-
+        this.watchState.checkPoints();
     }
 
     @Override
     public void checkValidMovieSize() {
-
+        this.watchState.checkValidMovieSize();
     }
 
     @Override
     public void fileRequest(Movie movie) {
-
+        this.watchState.fileRequest(movie);
     }
 
     @Override
     public void whenChangePoints(int x) {
-
+        this.watchState.whenChangePoints(x);
     }
 
     @Override
     public void downloadAborted() {
-
+        this.watchState.downloadAborted();
     }
 
     @Override
     public void downloadError() {
-
+        this.watchState.downloadError();
     }
 
     @Override
     public void whenQueueNotEmpty() {
-
+        this.watchState.whenQueueNotEmpty();
     }
 
     @Override
     public void errorFixed() {
-
+        this.watchState.errorFixed();
     }
 
     @Override
     public void movieOn() {
-
+        this.watchState.movieOn();
     }
 
     @Override
     public void restartMovie() {
-
+        this.watchState.restartMovie();
     }
 
     @Override
     public void holdMovie() {
-
+        this.watchState.holdMovie();
     }
 
     @Override
     public void movieOff() {
-
+        this.watchState.movieOff();
     }
 
     @Override
     public void resume() {
-
+        this.watchState.resume();
     }
 
     @Override
     public void entry() {
-
+        this.watchState.entry();
     }
 
     @Override
     public void exit() {
-
+        this.watchState.exit();
     }
 
     @Override
     public void downloadDone() {
-
+        this.watchState.downloadDone();
     }
 }

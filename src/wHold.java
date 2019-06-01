@@ -7,7 +7,7 @@ public class wHold implements DownloadMngrState {
 
     @Override
     public void turnOn() {
-
+        entry();
     }
 
     @Override
@@ -96,12 +96,12 @@ public class wHold implements DownloadMngrState {
 
     @Override
     public void entry() {
-        System.out.println("Enter Hold Watch state");
+        System.out.println("Enter Watch Hold state");
     }
 
     @Override
     public void exit() {
-        System.out.println("Exit Hold Watch state");
+        System.out.println("Exit Watch Hold state");
     }
 
     @Override

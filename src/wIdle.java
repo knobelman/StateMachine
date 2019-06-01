@@ -96,13 +96,13 @@ public class wIdle implements DownloadMngrState {
 
     @Override
     public void entry() {
-        System.out.println("Enter Idle Watch state");
+        System.out.println("Enter Watch Idle state");
         this.wmngr.cursor = 0;
     }
 
     @Override
     public void exit() {
-        System.out.println("Exit Idle Watch state");
+        System.out.println("Exit Watch Idle state");
     }
 
     @Override

@@ -7,7 +7,7 @@ public class wWatch implements DownloadMngrState {
 
     @Override
     public void turnOn() {
-
+        entry();
     }
 
     @Override

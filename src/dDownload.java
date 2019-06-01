@@ -63,7 +63,7 @@ public class dDownload implements DownloadMngrState {
 
     @Override
     public void whenChangePoints(int x) {
-
+        this.dmngr.whenChangePoints(x);
     }
 
     @Override
@@ -119,7 +119,8 @@ public class dDownload implements DownloadMngrState {
     @Override
     public void entry() {
         System.out.println("Enter Download Download state");
-        System.out.println("Downloading...");
+        double speed = this.dmngr.mgm.levelMngr.speed;
+        System.out.print("Downloading with speed of " + speed + "...");
         this.dmngr.downloadPercentage = 20;
         this.dmngr.inDownload = true;
         whenInDownload();

@@ -46,92 +46,92 @@ public class NetworkMngr implements DownloadMngrState{
     }
 
     @Override
-    public void checkPoints() {
-
-    }
-
-    @Override
-    public void checkValidMovieSize() {
-
-    }
-
-    @Override
-    public void fileRequest(Movie movie) {
-
-    }
-
-    @Override
     public void whenChangePoints(int x) {
-
-    }
-
-    @Override
-    public void downloadAborted() {
-
-    }
-
-    @Override
-    public void downloadError() {
-
-    }
-
-    @Override
-    public void whenQueueNotEmpty() {
-
-    }
-
-    @Override
-    public void errorFixed() {
-
-    }
-
-    @Override
-    public void movieOn() {
-
-    }
-
-    @Override
-    public void restartMovie() {
-
-    }
-
-    @Override
-    public void holdMovie() {
-
-    }
-
-    @Override
-    public void movieOff() {
-
-    }
-
-    @Override
-    public void resume() {
-
-    }
-
-    @Override
-    public void entry() {
-
-    }
-
-    @Override
-    public void exit() {
-
+        this.networdState.whenChangePoints(x);
     }
 
     @Override
     public void downloadDone() {
-
+        this.networdState.downloadDone();
     }
 
     @Override
     public void whenInIdle() {
-
+        this.networdState.whenInIdle();
     }
 
     @Override
     public void whenInDownload() {
+        this.networdState.whenInDownload();
+    }
 
+    @Override
+    public void whenQueueNotEmpty() {
+        this.networdState.whenQueueNotEmpty();
+    }
+
+    @Override
+    public void checkPoints() {
+        this.networdState.checkPoints();
+    }
+
+    @Override
+    public void checkValidMovieSize() {
+        this.networdState.checkValidMovieSize();
+    }
+
+    @Override
+    public void fileRequest(Movie movie) {
+        this.networdState.fileRequest(movie);
+    }
+
+    @Override
+    public void downloadAborted() {
+        this.networdState.downloadAborted();
+    }
+
+    @Override
+    public void downloadError() {
+        this.networdState.downloadError();
+    }
+
+    @Override
+    public void errorFixed() {
+        this.networdState.errorFixed();
+    }
+
+    @Override
+    public void movieOn() {
+        this.networdState.movieOn();
+    }
+
+    @Override
+    public void restartMovie() {
+        this.networdState.restartMovie();
+    }
+
+    @Override
+    public void holdMovie() {
+        this.networdState.holdMovie();
+    }
+
+    @Override
+    public void movieOff() {
+        this.networdState.movieOff();
+    }
+
+    @Override
+    public void resume() {
+        this.networdState.resume();
+    }
+
+    @Override
+    public void entry() {
+        this.networdState.entry();
+    }
+
+    @Override
+    public void exit() {
+        this.networdState.exit();
     }
 }

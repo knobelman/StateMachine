@@ -1,7 +1,9 @@
-import java.util.Observable;
+import java.util.ArrayList;
 
-public class QueueMngr extends Observable implements DownloadMngrState{
+public class QueueMngr implements DownloadMngrState, Observable{
     MovieDownloaderManager mgm;
+    private ArrayList<Observer> observers;
+
     //Queue Region
     DownloadMngrState qListening;
     DownloadMngrState queueState;
@@ -9,9 +11,36 @@ public class QueueMngr extends Observable implements DownloadMngrState{
     public QueueMngr(MovieDownloaderManager mgm) {
         this.qListening = new qListening(this);
         this.mgm = mgm;
-        this.addObserver(this.mgm);
+        observers = new ArrayList<>();
+        this.addObs(this.mgm);
 
         this.queueState = qListening;
+        this.queueState.entry();
+    }
+
+    @Override
+    public void whenQueueNotEmpty() {
+        notifyObs("q");
+    }
+
+
+    @Override
+    public void addObs(Observer o) {
+        observers.add(o);
+    }
+
+    @Override
+    public void removeObs(Observer o) {
+        int observerIndex = observers.indexOf(o);
+        observers.remove(observerIndex);
+    }
+
+    @Override
+    public void notifyObs(Object o) {
+        for(Observer observer : observers){
+            observer.update(o);
+        }
+
     }
 
     public DownloadMngrState getState(){ return this.queueState; }
@@ -26,11 +55,6 @@ public class QueueMngr extends Observable implements DownloadMngrState{
     }
 
     @Override
-    public void whenQueueNotEmpty() {
-        this.notifyObservers();
-    }
-
-    @Override
     public void turnOn() {
         this.queueState.turnOn();
     }
@@ -42,7 +66,7 @@ public class QueueMngr extends Observable implements DownloadMngrState{
 
     @Override
     public void turnOff() {
-        this.queueState.turnOff();
+        this.queueState.exit();
     }
 
     @Override
@@ -117,16 +141,17 @@ public class QueueMngr extends Observable implements DownloadMngrState{
 
     @Override
     public void downloadDone() {
-
+        this.queueState.downloadDone();
     }
 
     @Override
     public void whenInIdle() {
-
+        this.queueState.whenInIdle();
     }
 
     @Override
     public void whenInDownload() {
-
+        this.queueState.whenInDownload();
     }
+
 }

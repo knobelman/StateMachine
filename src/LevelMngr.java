@@ -129,11 +129,11 @@ public class LevelMngr implements DownloadMngrState{
 
     @Override
     public void whenInIdle() {
-
+        this.levelState.whenInIdle();
     }
 
     @Override
     public void whenInDownload() {
-
+        this.levelState.whenInDownload();
     }
 }

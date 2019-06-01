@@ -1,7 +1,7 @@
 import java.util.ArrayDeque;
-import java.util.Observable;
-import java.util.Observer;
 import java.util.Queue;
+import java.util.Scanner;
+
 
 public class MovieDownloaderManager implements Observer, DownloadMngrState {
     //Mngrs
@@ -23,14 +23,13 @@ public class MovieDownloaderManager implements Observer, DownloadMngrState {
         networkMngr = new NetworkMngr(this);
 
         this.downloadQ = new ArrayDeque<>();
-        on = false;
+        on = true;
     }
 
-    @Override
     /**
      * int - points, null - queue
      */
-    public void update(Observable o, Object arg) {
+    public void update(Object arg) {
         if(arg instanceof Integer){//points or idle
             if((Integer) arg == 1 || (Integer) arg == -1)//points
                 whenChangePoints((Integer) arg);
@@ -126,7 +125,7 @@ public class MovieDownloaderManager implements Observer, DownloadMngrState {
     @Override
     public void whenChangePoints(int x) {
         if(on) {
-            this.downloadMngr.whenChangePoints(x);
+            //this.downloadMngr.whenChangePoints(x);
             this.levelMngr.whenChangePoints(x);
             this.watchMngr.whenChangePoints(x);
             this.queueMngr.whenChangePoints(x);
@@ -162,7 +161,7 @@ public class MovieDownloaderManager implements Observer, DownloadMngrState {
             this.downloadMngr.whenQueueNotEmpty();
             this.levelMngr.whenQueueNotEmpty();
             this.watchMngr.whenQueueNotEmpty();
-            this.queueMngr.whenQueueNotEmpty();
+            //this.queueMngr.whenQueueNotEmpty();
             this.networkMngr.whenQueueNotEmpty();
         }
     }
@@ -269,7 +268,7 @@ public class MovieDownloaderManager implements Observer, DownloadMngrState {
     @Override
     public void whenInIdle() {
         if(on) {
-            this.downloadMngr.whenInIdle();
+            //this.downloadMngr.whenInIdle();
             this.levelMngr.whenInIdle();
             this.watchMngr.whenInIdle();
             this.queueMngr.whenInIdle();
@@ -280,7 +279,7 @@ public class MovieDownloaderManager implements Observer, DownloadMngrState {
     @Override
     public void whenInDownload() {
         if(on) {
-            this.downloadMngr.whenInDownload();
+            //this.downloadMngr.whenInDownload();
             this.levelMngr.whenInDownload();
             this.watchMngr.whenInDownload();
             this.queueMngr.whenInDownload();
@@ -290,6 +289,78 @@ public class MovieDownloaderManager implements Observer, DownloadMngrState {
 
     public static void main(String[] args){
         MovieDownloaderManager mdm = new MovieDownloaderManager();
+        Scanner scr = new Scanner(System.in);  // Create a Scanner object
+        int ans = 0;
+        while(ans != -1){
+            System.out.println("------------------");
+            System.out.println("----Event List----");
+            System.out.println("1. turnOn");
+            System.out.println("2. turnOff");
+            System.out.println("3. internetOn");
+            System.out.println("4. internetOff");
+            System.out.println("5. fileRequest");
+            System.out.println("6. downloadAborted");
+            System.out.println("7. downloadError");
+            System.out.println("8. errorFixed");
+            System.out.println("9. downloadDone");
+            System.out.println("10. movieOn");
+            System.out.println("11. restartMovie");
+            System.out.println("12. holdMovie");
+            System.out.println("13. movieOff");
+            System.out.println("14. resume");
+            System.out.println("-1. Exit");
+            System.out.print("Enter the event number you want to run: ");
+            try {
+                ans = scr.nextInt();
+            }catch (Exception e){
+                System.out.println("Wrong input, only Integer numbers are allowed");
+            }
+            switch (ans){
+                case 1:
+                    mdm.turnOn();
+                    break;
+                case 2:
+                    mdm.turnOff();
+                    break;
+                case 3:
+                    mdm.internetOn();
+                    break;
+                case 4:
+                    mdm.internetOff();
+                    break;
+                case 5:
+                    mdm.fileRequest(new Movie());
+                    break;
+                case 6:
+                    mdm.downloadAborted();
+                    break;
+                case 7:
+                    mdm.downloadError();
+                    break;
+                case 8:
+                    mdm.errorFixed();
+                    break;
+                case 9:
+                    mdm.downloadDone();
+                    break;
+                case 10:
+                    mdm.movieOn();
+                    break;
+                case 11:
+                    mdm.restartMovie();
+                    break;
+                case 12:
+                    mdm.holdMovie();
+                    break;
+                case 13:
+                    mdm.movieOff();
+                    break;
+                case 14:
+                    mdm.resume();
+                    break;
+            }
+            System.out.println();
+        }
 
     }
 }

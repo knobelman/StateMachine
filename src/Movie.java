@@ -1,12 +1,14 @@
+import java.util.Random;
+
 public class Movie {
-    private String name;
     private int size;
     private int length;
+    Random rand = new Random();
 
-    public Movie(String name, int size, int length) {
-        this.name = name;
-        this.size = size;
-        this.length = length;
+
+    public Movie() {
+        this.size = rand.nextInt(10);//GB
+        this.length = rand.nextInt(120);//Minutes
     }
 
     public int getLength() {
@@ -15,14 +17,6 @@ public class Movie {
 
     public void setLength(int length) {
         this.length = length;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public int getSize() {
@@ -36,8 +30,7 @@ public class Movie {
     @Override
     public String toString() {
         return "Movie{" +
-                "Name='" + name + '\'' +
-                ", Size=" + size +
+                "Size=" + size +
                 ", Length=" + length +
                 '}';
     }
